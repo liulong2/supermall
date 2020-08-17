@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function request(config) {
   const instance = axios.create({
-    baseURL: 'http://123.207.32.32:8000',
+    baseURL: 'http://152.136.185.210:8000/api/z8',
     timeout: 50000
   })
 
@@ -16,10 +16,10 @@ export function request(config) {
   })
   //axios响应拦截器
   instance.interceptors.response.use(res =>{
-    console.log(res);
+    // console.log(res);
     return res.data
   },err =>{
-    console.log(err);
+    // console.log(err);
     return err
   })
   return instance(config)

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <main-tab-bar></main-tab-bar>
+    <main-tab-bar class="bar"></main-tab-bar>
     <router-view></router-view>
   </div>
 </template>
@@ -19,4 +19,7 @@ export default {
 
 <style>
 @import "assets/css/base.css";
+.bar {
+  z-index: 10;
+}
 </style>
