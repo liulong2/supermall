@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <ul class="content">
+      <button @click="btnClick">按钮</button>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>
@@ -123,9 +124,28 @@
           })*/
       },
       mounted() {
+        //  默认状态下不能实时鉴定滚动位置
+        // probe 侦测 0,1都不侦测 2在手指滚得过程侦测,惯性不侦测 3只要是滚动都侦测
         this.scroll = new BScroll(document.querySelector('.wrapper'),{
-
+          probeType: 3,
+          click: true,
+          pullUpLoad: true
         })
+        this.scroll.on('scroll',(position) => {
+          console.log(position);
+        })
+        this.scroll.on('pullingUp', () => {
+          console.log('上啦加载更多');
+
+
+          //上拉加载完成可以进行下一次上拉加载
+          this.scroll.finishPullUp()
+        })
+      },
+      methods: {
+        btnClick() {
+          console.log("ceshi");
+        }
       }
     }
 </script>
@@ -135,6 +155,7 @@
   height: 150px;
   background-color: red;
 
+  overflow: hidden;
  /* overflow: hidden;
   overflow-y: scroll;*/
 }
