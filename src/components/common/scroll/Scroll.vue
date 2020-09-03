@@ -15,10 +15,10 @@
             type: Number,
             default: 0
           },
-        /*pullUpLoad: {
+        pullUpLoad: {
             type: Boolean,
           default: false
-        }*/
+        }
       },
       data() {
         return {
@@ -40,10 +40,10 @@
 
         this.scroll.refresh()
         //监听上拉事件
-        /*this.scroll.on('pullingUp', () =>{
+        this.scroll.on('pullingUp', () =>{
           // console.log('上拉挤在更多');
           this.$emit('pullingUp')
-        })*/
+        })
       },
       methods: {
           scrollTo(x,y,time=300) {
@@ -54,7 +54,10 @@
         },
         refresh() {
           console.log('----');
-          this.scroll &&this.scroll.refresh()
+          this.scroll && this.scroll.refresh()
+        },
+        getScrollY () {
+            return this.scroll  ? this.scroll.y : 0
         }
       }
     }
