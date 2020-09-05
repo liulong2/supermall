@@ -30,8 +30,8 @@
       methods: {
         imgLoad() {
           this.counterL++
-          console.log(this.imagesLength);
-          console.log(this.counterL)
+          // console.log(this.imagesLength);
+          // console.log(this.counterL)
           // console.log(typeof(this.counterL));
           if (this.counterL === this.imagesLength) {
             this.$emit('imageLoad')
