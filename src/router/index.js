@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-const Cat = () =>import('../views/cat/Cat')
+const Cat = () =>import('../views/cat/Cart')
 const Home =() => import('../views/home/Home')
 const Category = () => import('../views/category/Category')
 const Profile = () => import('../views/profile/Profile')
@@ -23,7 +23,7 @@ const routes = [
     component: Category
   },
   {
-    path: '/cats',
+    path: '/cart',
     component: Cat
   },
   {

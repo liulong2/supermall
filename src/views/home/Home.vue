@@ -31,11 +31,10 @@
   import FeatureView from "./childComps/FeatureView";
   import GoodList from "../../components/content/goods/GoodList";
   import Scroll from "../../components/common/scroll/Scroll";
-  import BackTop from "../../components/content/backTop/BackTop";
 
   import {getHomeMultidata,getHomeGood} from "network/home";
   import {debounce} from "../../common/utils";
-  import {itemListenerMixin} from "../../common/mixin";
+  import {itemListenerMixin,backTopMixin} from "../../common/mixin";
 
 
   export default {
@@ -48,9 +47,8 @@
         TabControl,
         GoodList,
         Scroll,
-        BackTop
       },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin,backTopMixin],
     data() {
        return {
          banners: [],
@@ -124,9 +122,6 @@
             this.$refs.tabControlNew.currentIndex = index
             this.$refs.tabControl.currentIndex = index
           },
-      backClicks() {
-        this.$refs.scroll.scrollTo(0,0,500)
-      },
       contentScroll(position) {
         // console.log(position);
           //判断是否显示

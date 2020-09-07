@@ -2,6 +2,7 @@
     <div id="detail">
       <detail-nav-bar class="detail-nav-bar" @titleClick="titleClick" ref="nav"></detail-nav-bar>
       <scroll class="content" ref="scroll" :probe-type="3" @scroll="countScroll">
+<!--        <div>{{$store.state.cartList}}</div>-->
         <detail-swiper :top-images="topImages"></detail-swiper>
         <detail-base-info :goods="goods"></detail-base-info>
         <detail-shop-info :shop="shop"></detail-shop-info>
@@ -9,7 +10,11 @@
         <detail-param-info ref="params" :param-info="paramInfo"></detail-param-info>
         <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
         <good-list ref="recommend" :goods="recommends"></good-list>
+
+
       </scroll>
+      <detail-bottm-bar @addCart="addCart"></detail-bottm-bar>
+      <back-top @click.native="backClicks" v-show="isShow"></back-top>
     </div>
 </template>
 
@@ -23,10 +28,13 @@
   import DetailParamInfo from "./childComps/DetailParamInfo";
   import DetailCommentInfo from "./childComps/DetailCommentInfo";
   import GoodList from "../../components/content/goods/GoodList";
+  import DetailBottmBar from "./childComps/DetailBottmBar";
+
 
   import {getDetail,Goods,Shop,GoodsParam,getRecommend} from "../../network/detail";
   import {debounce} from "../../common/utils";
-  import {itemListenerMixin} from "../../common/mixin";
+  import {itemListenerMixin,backTopMixin} from "../../common/mixin";
+  import {BACKTOP_DISTANCE} from "@/common/const";
 
   export default {
         name: "Detail",
@@ -39,9 +47,10 @@
         DetailShopInfo,
         Scroll,
         DetailGoodsInfo,
-        GoodList
+        GoodList,
+        DetailBottmBar
       },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin,backTopMixin],
       data() {
         return {
           iid: null,
@@ -54,7 +63,8 @@
           recommends: [],
           // itemImgListener: null
           themeTopYs: [],
-          currentIndex: 0
+          currentIndex: 0,
+
         }
       },
       created() {
@@ -101,6 +111,16 @@
 
       },
     methods: {
+      addCart() {
+        const product ={}
+        product.image = this.topImages[0]
+        product.title = this.goods.title
+        product.desc = this.goods.desc
+        product.price = this.goods.realPrice
+        product.iid = this.iid
+        // console.log(product);
+        this.$store.dispatch('addCart',product);
+      },
       detailImgLoad() {
         this.$refs.scroll.refresh()
 
@@ -113,13 +133,15 @@
         console.log(this.themeTopYs)
       },
       titleClick(index) {
-        this.currentIndex = index
         console.log(index);
         this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],300)
       },
       countScroll(position) {
         // console.log(this.currentIndex);
         // console.log(position);
+        //是否显示回到顶部
+        this.isShow =  position.y <= -BACKTOP_DISTANCE
+
         const positionY = -position.y
         let length = this.themeTopYs.length
         for (let themeTopYsKey = 0; themeTopYsKey < length -1; themeTopYsKey++) {
@@ -172,6 +194,6 @@
   background-color: #ffffff;
 }
   .content{
-    height: calc(100% - 44px);
+    height: calc(100% - 44px - 49px);
   }
 </style>
