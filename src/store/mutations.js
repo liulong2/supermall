@@ -6,6 +6,7 @@ export default {
   },
   [ADD_TO_CART](state,payload) {
     // console.log(payload);
+    payload.checked = true
     state.cartList.push(payload)
   }
 }
